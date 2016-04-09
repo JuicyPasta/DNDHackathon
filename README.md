@@ -1,4 +1,5 @@
-# DNDHackathon
+# Mustang Marks
+An enhanced PolyRatings view, complete with Chrome Extension that plugs into PASS
 54.153.82.85 or ec2-54-153-82-85.us-west-1.compute.amazonaws.com
 
 ---
