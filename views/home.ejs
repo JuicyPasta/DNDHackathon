@@ -1,61 +1,125 @@
 <%- include("header.ejs") -%>
 
 <style>
-
-   #searchField {
-      width:470px;
-      height:60px;
-      background-color: rgba(255,255,255, .5);
-      margin-bottom: 120px;
-      font: avenir;
-      border-radius: 5px;
-      margin-right: 0px;
-      font-size: 20px;
-      text-align: center;
-      line-height: 60px;
-      color: rgba(255, 255, 255, .72);
-      border: none;
-      padding: 0;
-      margin-left: 300px;
-   }
-   #searchField::-webkit-input-placeholder {
-      color: rgba(255, 255, 255, .72);
+   #searchGroup {
+      margin-top: 300px;
+      width: 600px;
+      z-index: 1000;
    }
    #searchButton {
+      width: 150px;
       background-color: rgb(0, 176, 101);
-      margin-left: 100px;
-      margin-bottom: 110px;
-      width: 100px;
+
+   }
+   .form-control::-webkit-input-placeholder { color: rgba(255, 255, 255, .5); }
+   .form-control:-moz-placeholder { color: rgba(255, 255, 255, .5); }
+   .form-control::-moz-placeholder { color: rgba(255, 255, 255, .5); }
+   .form-control:-ms-input-placeholder { color: rgba(255, 255, 255, .5); }
+   #mainSearch {
+      background-color: rgba(255, 255, 255, .5);
+      color: rgba(255, 255, 255, .72);
+      font-size: 20px;
       border: none;
-      height:60px;
-      padding: 0;
-
    }
-   .container {
+   .btn-xlarge {
+       padding: 18px 22px;
+      color: rgba(255, 255, 255, .72);
+       line-height: normal;
+       -webkit-border-radius: 8px;
+          -moz-border-radius: 8px;
+               border-radius: 8px;
+   }
+   .input-xlarge {
+       line-height: 27px;
+       padding-top: 27px;
+       padding-left: 15px;
+       padding-right: 30px;
+       padding-bottom: 27px;
+       -webkit-border-radius: 8px;
+          -moz-border-radius: 8px;
+               border-radius: 8px;
+   }
+   #searchButton {
+      border-radius: 0 10px 10px 0;
+   }
+   #logo {
+      margin-left: 100px;
+      margin-top: 75px;
+      width: 100px;
+      height: 100px;
+   }
+   #searchResults {
+      width: 420px;
+      height: 150px;
+      border-radius: 0 0 10px 10px;
+   }
+   #searchResults > #searchResultsList {
       width: 100%;
-      text-align: center;
-      display: inline-block;
+      height: 100%;
+      padding: 0;
+      margin-right: 0;
+      background-color: rgba(255, 255, 255, .6);
+      margin-bottom: 0px;
+      border-radius: 0 0 10px 10px;
    }
-
+   #searchResults > ul > li {
+      padding-left: 15px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      height: 40px;
+      width: 100%;
+   }
+   #mainSearch {
+      border-radius: 10px 0 0 10px;
+   }
+   #searchResults > ul{height:200px; width:18%;}
+   #searchResults > ul{overflow:hidden; overflow-y:scroll;}
+   .star {
+      width: 20px; 
+      height: 20px
+   }
+   .teacherName {
+      font-weight: bold;
+   }
 </style>
 
 <div class="photo first" data-stellar-background-ratio="0.5"><span>
-   
-<link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
-   <div class="input-group container">
-      <input id="searchField"type="text" class="form-control" placeholder="Search for...">
-      <span class="input-group-btn" style="width: 200px; margin:0">
-        <button id="searchButton" class="btn btn-default" type="button">Go!</button>
-      </span>
+      <img id="logo" src="/images/HACK_LOGO_LARGE_WHITE.png"> </img>
+   <div class="container">
+      <div class="col-lg-5 col-lg-offset-3" id="searchGroup">
+           <div class="input-group">
+               <input id="mainSearch" type="text" class="form-control input-xlarge" placeholder="Search by name, class title, or keyword" /> 
+               <span class="input-group-btn">
+                   <button id="searchButton" class="btn btn-xlarge" type="button">Go!</button>
+               </span>
+            <div>
+
+         </div>
+      </div>
+      <div id="searchResults" hidden="hidden">
+         <ul id="searchResultsList">
+            <% for (var i =0; i<5; i++) { %>
+               <li>
+                  <div class="teacherName"> Elizabeth Johnson </div>
+                  <div style="margin-left: 20px">
+                     <img src="/images/star.png" class="star"></img>
+                     <img src="/images/star.png" class="star"></img>
+                     <img src="/images/star.png" class="star"></img>
+                     <img src="/images/star.png" class="star"></img>
+                     <span> (78) / </span> <span style="font-style: italic;">Graphic Communication </span>
+                  </div>
+               </li>
+            <% } %>
+        </ul>      
+      </div>
    </div>
+</div>
 </span></div>
-<div class="photo autumn" data-stellar-background-ratio="0.5"><span>Autumn</span></div>
-<div class="photo winter" data-stellar-background-ratio="0.5"><span>Winter</span></div>
-<div class="photo spring" data-stellar-background-ratio="0.5"><span>Spring</span></div>
-<div class="photo summer" data-stellar-background-ratio="0.5"><span>Summer</span></div>
-<div class="photo autumn" data-stellar-background-ratio="0.5"><span>Autumn</span></div>
-<div class="photo winter" data-stellar-background-ratio="0.5"><span>Winter</span></div>
-<div class="photo spring" data-stellar-background-ratio="0.5"><span>Spring</span></div>
+<div class="photo second" style="height: 300px" data-stellar-background-ratio="0.5"><span>
+
+</span></div>
+<div class="photo third" data-stellar-background-ratio="0.5"><span></span></div>
+<div class="photo fourth" data-stellar-background-ratio="0.5"><span></span></div>
 
 <%- include("footer.ejs") -%>
 
@@ -63,7 +127,40 @@
    $(function(){
          $.stellar({
             horizontalScrolling: false,
-            verticalOffset: 0
+            verticalOffset: 0,
+            responsive: true
          });
       });
+   $('document').ready(function (){
+      // var success = $("#success");
+      // var danger = $("#danger");
+
+      $("#mainSearch").click(function(e){
+            $('#mainSearch').css('border-radius', '10px 0px 0px 0px');
+         $('#searchResults').slideDown(function(){
+            $('#searchResults').css("display", "block");
+         });
+      });
+      $(document).click(function(event){
+         if (!$(event.target).is('#mainSearch') && !$(event.target).parents().is('#searchResults') && !$(event.target).is("#searchResults")) {
+            $('#searchResults').slideUp(function(){
+            $('#mainSearch').css('border-radius', '10px 0 0 10px');
+               $('#searchResults').css("display", "none");
+            });
+         }
+      });
+      var numRand = Math.floor(Math.random()*1000) + parseFloat(0);
+      var numRand1 = Math.floor(Math.random()*1000) + parseFloat(0);
+      var numRand2 = Math.floor(Math.random()*1000) + parseFloat(0);
+      var numRand3 = Math.floor(Math.random()*1000) + parseFloat(0);
+      var numRand4 = Math.floor(Math.random()*1000) + parseFloat(0);
+      $(".star").click(function(event) {
+        //  $(event.target).animate({
+        //   marginLeft: '20px'
+        // }, 1000, function() {
+        //   // Animation complete.
+        // });
+      $(event.target).attr("src", "/images/star.gif-c200");
+      });
+   });
 </script>
