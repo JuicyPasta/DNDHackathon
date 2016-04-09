@@ -8,6 +8,7 @@ request(url, function (error, response, body) {
         //console.log(body);
         $ = cheerio.load(body);
         var thing = $('font');
+        console.log(response);
         //console.log(thing);
         //console.log("overall statistics");
         //console.log("Total evaluations: " + thing[28].children[0].data);
@@ -24,6 +25,9 @@ request(url, function (error, response, body) {
         //console.log("Mean: " + thing[50].children[0].data);
         //console.log("Mode: " + thing[54].children[0].data);
         //console.log("Standard Deviation: " + thing[56].children[0].data);
+        var deptSelect = $('font');
+        var dept = deptSelect[3].children[0].data;
+        var teacher = deptSelect[2].children[0].data;
 
         for (var i = 0; i < 100; i++) {
             if (thing[i] && thing[i].children && thing[i].children.length > 0) {

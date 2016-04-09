@@ -9,15 +9,91 @@ $('.row-gray').click(clicked);
 $('.row-white').attr("data-toggle", "tooltip");
 $('.row-gray').attr("data-toggle", "tooltip");
 
-
 $('.row-white').tooltip();
 $('.row-gray').tooltip();
+
+function toInsert(data) {
+    var toRet = `
+        <tr class='info'>
+        <td colspan="100%">
+        <div class="row info">
+            <div class="col-md-3">
+                <img class='pic' height='100px' width='100px' src="http://localhost:3000/` + data.photo + `">
+                <br>
+                <p class = "h4">
+                
+                ` + data.teacher + `
+                </p>
+                <p class = "h5">
+                ` + data.department + `
+                </p>
+                Total Evaulations ` + data.totalEvals + `
+                <br>
+            </div>
+            <div class="col-md-3">
+                Total Evaulations ` + data.totalEvals + `
+                <br>
+                <b>
+                Overall stats
+                </b>
+                <br>
+                mean ` + data.overall.mean + `
+                <br>
+                mode ` + data.overall.mode + `
+                <br>
+                standard deviation ` + data.overall.stdDev + `
+                <br>
+
+                <b>
+                Ability to present material
+                </b>
+                <br>
+                mean ` + data.presentation.mean + `
+                <br>
+                mode ` + data.presentation.mode + `
+                <br>
+                standard deviation ` + data.presentation.stdDev + `
+                <br>
+
+                <b>
+                Ability to understand
+                </b>
+                <br>
+                mean ` + data.understandingness.mean + `
+                <br>
+                mode ` + data.understandingness.mode + `
+                <br>
+                standard deviation ` + data.understandingness.stdDev + `
+                <br>
+
+            </div>
+            <div class="col-md-4">
+                the teachers name is ` + data.teacher + `
+            </div>
+        </div>
+        </td>
+        </tr>`;
+
+    return toRet;
+};
 
 
 function clicked() {
     var current = $(this);
-    alert('clicked');
+    
+    $.get( "http://localhost:3000/users/", function( data ) {
+        console.log(data);
+        if (current.next().attr('class') == 'info') {
+            current.next().remove();
+        } else {
+            current.after($(toInsert(data)));
+        }
+    });
 }
+
+$().after(function() {
+    return "<div>" + this.className + "</div>";
+});
 
 function walk(node) {
 
@@ -25,6 +101,7 @@ function walk(node) {
     var rowGray = $('.row-gray');
 
     console.log(rowWhite);
+
 }
 
 function handleName(textNode)

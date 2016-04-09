@@ -16,7 +16,7 @@
         {
             "matches": ["http://pass.calpoly.edu/main.html"],
             "js":["thirdParty/jquery-2.2.3.min.js", "thirdParty/bootstrap.min.js" , "linker.js"],
-            "css": ["thirdParty/bootstrap.min.css"],
+            "css": ["thirdParty/bootstrap.min.css", "thirdParty/style.css"],
             "run_at": "document_end"
         }
     ],
