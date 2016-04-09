@@ -3,22 +3,25 @@ var cheerio = require('cheerio');
 var fs = require("fs");
 var urls = {};
 
-var polyform = "http://polyratings.com/search.phtml?";
+var name = "Johnson";
+var formurl = "http://polyratings.com/search.phtml";
 
-request(polyform, function (error, response, body) {
-   if(!err && resp.satusCode == 200) {
+request({uri: formurl, method: "POST", form: {name: name}}, function (error, response, body) {
+   if(!error && response.statusCode == 200) {
       var $ = cheerio.load(body);
-      $('a.title', '#siteTable').each(function() {
-      
-         var url = this.attr('href');
-         
-         if(url.indexOf('') != -1) {
-            urls.push(url);
-         }
-      });
+      var url = $('header');
+      console.log(url);
+      var profids = {};
 
-      for(var i = 0; i < urls.length; i++) {
-         request(urls[i]).pipe(fs.createWriteStream('' + i + ''));
+      if(url.indexOf("phtml") == -1) {
+         profids.push(url.split("profid=")[1]);
+      }
+      else {
+         var hrefs = $("a");
+         for(var i = 0; i < hrefs.length; i++) {
+            profids[i] = hrefs[i].children[0];
+            console.log(hrefs[i]);
+         }
       }
    }
 });
