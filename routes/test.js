@@ -3,25 +3,25 @@ var cheerio = require('cheerio');
 var fs = require("fs");
 var urls = {}
 
-var name = "Johnson";
-var formurl = "http://polyratings.com/search.phtml";
+var name = "Staley";
+var formurl = "http://polyratings.com/list.phtml";
 
 request({uri: formurl, method: "POST", form: {name: name}}, function (error, response, body) {
    if(!error && response.statusCode == 200) {
       var $ = cheerio.load(body);
-      var url = $('header');
-      console.log(url);
-      var profids = {};
+      var hrefs = $("a");
+      var profIds = {};
+      var profNames = {};
+      var profNamesIds = {};
 
-      if(url.indexOf("phtml") == -1) {
-         profids.push(url.split("profid=")[1]);
+      console.log(hrefs[2447].children[5].data);
+      for(var i = 5; i < hrefs.length - 1; i++) {
+         profNames[i - 5] = hrefs[i].children[0].data;
+         profIds[i - 5] = hrefs[i].children[5].data;
       }
-      else {
-         var hrefs = $("a");
-         for(var i = 0; i < hrefs.length; i++) {
-            profids[i] = hrefs[i].children[0];
-            console.log(hrefs[i]);
-         }
-      }
+     
+      profNamesIds[0] = profNames;
+      profNamesIds[1] = profIds;
+      console.log(profNamesIds[0][2442]);
    }
 });
