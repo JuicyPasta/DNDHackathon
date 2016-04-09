@@ -1,0 +1,69 @@
+<%- include("header.ejs") -%>
+
+<style>
+
+   #searchField {
+      width:470px;
+      height:60px;
+      background-color: rgba(255,255,255, .5);
+      margin-bottom: 120px;
+      font: avenir;
+      border-radius: 5px;
+      margin-right: 0px;
+      font-size: 20px;
+      text-align: center;
+      line-height: 60px;
+      color: rgba(255, 255, 255, .72);
+      border: none;
+      padding: 0;
+      margin-left: 300px;
+   }
+   #searchField::-webkit-input-placeholder {
+      color: rgba(255, 255, 255, .72);
+   }
+   #searchButton {
+      background-color: rgb(0, 176, 101);
+      margin-left: 100px;
+      margin-bottom: 110px;
+      width: 100px;
+      border: none;
+      height:60px;
+      padding: 0;
+
+   }
+   .container {
+      width: 100%;
+      text-align: center;
+      display: inline-block;
+   }
+
+</style>
+
+<div class="photo first" data-stellar-background-ratio="0.5"><span>
+   
+<link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+   <div class="input-group container">
+      <input id="searchField"type="text" class="form-control" placeholder="Search for...">
+      <span class="input-group-btn" style="width: 200px; margin:0">
+        <button id="searchButton" class="btn btn-default" type="button">Go!</button>
+      </span>
+   </div>
+</span></div>
+<div class="photo autumn" data-stellar-background-ratio="0.5"><span>Autumn</span></div>
+<div class="photo winter" data-stellar-background-ratio="0.5"><span>Winter</span></div>
+<div class="photo spring" data-stellar-background-ratio="0.5"><span>Spring</span></div>
+<div class="photo summer" data-stellar-background-ratio="0.5"><span>Summer</span></div>
+<div class="photo autumn" data-stellar-background-ratio="0.5"><span>Autumn</span></div>
+<div class="photo winter" data-stellar-background-ratio="0.5"><span>Winter</span></div>
+<div class="photo spring" data-stellar-background-ratio="0.5"><span>Spring</span></div>
+
+<%- include("footer.ejs") -%>
+
+<script>
+   $(function(){
+         $.stellar({
+            horizontalScrolling: false,
+            verticalOffset: 0
+         });
+      });
+</script>

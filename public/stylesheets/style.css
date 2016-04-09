@@ -1,8 +1,47 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+@font-face {
+    font-family: "avenir";
+    src: url("/font/Avenir Roman.otf");
 }
 
-a {
-  color: #00B7FF;
+* {
+   margin: 0;
+   padding: 0;
+}
+body {
+   font-family: avenir;
+}
+.photo {
+   background-attachment: fixed;
+   background-position: 50% 0;
+   background-repeat: no-repeat;
+   height: 800px;
+   position: relative;
+}
+.photo span {
+   bottom: 0;
+   color: white;
+   display: block;
+   left: 50%;
+   margin-left: -640px;
+   padding: 10px;
+   position: absolute;
+   width: 1280px;
+
+   /*Mine*/
+   font-size: 20px;
+   text-align: center;
+   line-height: 60px;
+   color: rgba(255, 255, 255, .72);
+}
+.first {
+   background-image: url("/images/backgroundphoto.png");
+}
+.autumn {
+   background: white;
+}
+.winter {
+   background: green;
+}
+.spring {
+   background: purple;
 }
