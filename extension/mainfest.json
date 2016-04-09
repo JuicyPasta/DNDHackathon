@@ -1,0 +1,21 @@
+{
+   "name": "PR++",
+   "version": "1.0",
+   "manifest_version": 1,
+   "description": "Displays useful windows when hovering over a professor name in PASS",
+   "icons": ,
+   "background": {
+      "scripts": {"background.js"}
+},
+   "browser_action": {
+      "default_title": "PR++",
+      "default_icon": ,
+},
+   "options_page": "options.html",
+   "permissions": {
+      "background",
+      "tabs",
+      "http://*/*",
+      "https://*/*",
+   }
+}
