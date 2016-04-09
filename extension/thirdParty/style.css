@@ -3,3 +3,27 @@
     box-shadow: 2px 2px 5px grey;
 }
 
+.no-height {
+    height: 0px;
+}
+
+.hoverable:hover {
+    background:rgba(0,0,0,0.2) !important;
+}
+
+.hoverable {
+    //background-color: black !important;
+
+}
+
+.wordCloud {
+    border: solid black 1px; 
+    border-radius: 5px;
+    width: 250px;
+    height: 250px;
+    overflow: auto;
+}
+.cloud {
+    width: 500px;
+    height: 500px;
+}

@@ -6,70 +6,68 @@ walk(document.body);
 $('.row-white').click(clicked);
 $('.row-gray').click(clicked);
 
-$('.row-white').attr("data-toggle", "tooltip");
-$('.row-gray').attr("data-toggle", "tooltip");
-
-$('.row-white').tooltip();
-$('.row-gray').tooltip();
+$('.row-white').addClass("hoverable");
+$('.row-gray').addClass("hoverable");
 
 function toInsert(data) {
     var toRet = `
         <tr class='info'>
         <td colspan="100%">
-        <div class="row info">
-            <div class="col-md-3">
-                <img class='pic' height='100px' width='100px' src="http://localhost:3000/` + data.photo + `">
-                <br>
-                <p class = "h4">
-                
-                ` + data.teacher + `
-                </p>
-                <p class = "h5">
-                ` + data.department + `
-                </p>
-                Total Evaulations ` + data.totalEvals + `
-                <br>
-            </div>
-            <div class="col-md-3">
-                Total Evaulations ` + data.totalEvals + `
-                <br>
-                <b>
-                Overall stats
-                </b>
-                <br>
-                mean ` + data.overall.mean + `
-                <br>
-                mode ` + data.overall.mode + `
-                <br>
-                standard deviation ` + data.overall.stdDev + `
-                <br>
+        <div class="row info no-height">
+        <div class="col-md-3">
+        <img class='pic' height='100px' width='100px' src="http://localhost:3000/` + data.photo + `">
+        <br>
+        <p class = "h3">
 
-                <b>
-                Ability to present material
-                </b>
-                <br>
-                mean ` + data.presentation.mean + `
-                <br>
-                mode ` + data.presentation.mode + `
-                <br>
-                standard deviation ` + data.presentation.stdDev + `
-                <br>
+        ` + data.teacher + `
+        </p>
+        <p class = "h5">
+        ` + data.department + `
+        </p>
+        Total Evaulations ` + data.totalEvals + `
+        <br>
+        </div>
 
-                <b>
-                Ability to understand
-                </b>
-                <br>
-                mean ` + data.understandingness.mean + `
-                <br>
-                mode ` + data.understandingness.mode + `
-                <br>
-                standard deviation ` + data.understandingness.stdDev + `
-                <br>
+        <div class="col-md-2">
+        <b>
+        Overall stats
+        </b>
+        <br>
+        mean ` + data.overall.mean + `
+        <br>
+        mode ` + data.overall.mode + `
+        <br>
+        standard deviation ` + data.overall.stdDev + `
+        <br>
+        </div>
+        <div class="col-md-2">
+        <b>
+        Ability to present material
+        </b>
+        <br>
+        mean ` + data.presentation.mean + `
+        <br>
+        <br>
+        standard deviation ` + data.presentation.stdDev + `
+        </div>
 
-            </div>
-            <div class="col-md-4">
-                the teachers name is ` + data.teacher + `
-            </div>
+        <div class="col-md-2">
+        <b>
+        Ability to understand
+        </b>
+        <br>
+        mean ` + data.understandingness.mean + `
+        <br>
+        mode ` + data.understandingness.mode + `
+        <br>
+        standard deviation ` + data.understandingness.stdDev + `
+        <br>
+        </div>
+
+        <div class="col-md-3 wordCloud">
+            <img class='cloud' src="http://localhost:3000/` + data.cloud + `">
+        </div>
+
         </div>
         </td>
         </tr>`;
@@ -80,14 +78,16 @@ function toInsert(data) {
 
 function clicked() {
     var current = $(this);
-    
+
     $.get( "http://localhost:3000/users/", function( data ) {
         console.log(data);
         if (current.next().attr('class') == 'info') {
             current.next().remove();
         } else {
-            current.after($(toInsert(data)));
+            var element = $(toInsert(data));
+            current.after(element);
         }
+
     });
 }
 

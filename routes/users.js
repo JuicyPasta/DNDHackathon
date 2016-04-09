@@ -30,6 +30,9 @@ router.get('/', function(req, res, next) {
 
     };
     data.photo = data.teacher.split(' ').join('') + ".jpg";
+    data.cloud = data.teacher.split(' ').join('') + "Cloud.svg";
+    data.cloud = "MammenKurtCloud.svg";
+    console.log(data.cloud);
 
     request(url, function (error, response, body) {
         if (!error && response.statusCode == 200) {
