@@ -2,10 +2,15 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var cheerio = require('cheerio');
+var profsids = require('../profids.js');
+
 var fs = require('fs');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get(/\/.*/, function(req, res, next) {
+    console.log(req.url);
+    
+    console.log(profsids);
     var url = "http://polyratings.com/stats.phtml?profid=778";
 
     var data = {
@@ -55,6 +60,11 @@ router.get('/', function(req, res, next) {
             var deptSelect = $('font');
             data.department = deptSelect[3].children[0].data;
             data.teacher = deptSelect[2].children[0].data;
+            console.log(data.teacher);
+            var temp = data.teacher.split(' ');
+            var id = profsids(temp[1] + temp[0]);
+            console.log(temp);
+            console.log(id);
 
             res.send(data);
 
