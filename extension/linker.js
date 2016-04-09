@@ -47,6 +47,7 @@ function toInsert(data) {
         <br>
         mean ` + data.presentation.mean + `
         <br>
+        mode ` + data.presentation.mode + `
         <br>
         standard deviation ` + data.presentation.stdDev + `
         </div>
@@ -78,9 +79,13 @@ function toInsert(data) {
 
 function clicked() {
     var current = $(this);
+    var fullName = current.children()[4].innerText;
+    console.log("fullname is " + fullName);
+    fullName = fullName.split(' ')[0];
+    fullName = fullName.split(',').join('');
+    console.log("fullname is " + fullName);
 
-    $.get( "http://localhost:3000/users/", function( data ) {
-        console.log(data);
+    $.get( "http://localhost:3000/users/" + fullName, function( data ) {
         if (current.next().attr('class') == 'info') {
             current.next().remove();
         } else {

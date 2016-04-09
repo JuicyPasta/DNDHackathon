@@ -22,6 +22,8 @@ request(formurl, function (error, response, body) {
    }
 });
 
+profs.GerfenJeffrey = 946;
+profs.MammenKurt = 970;
 module.exports = function getId(name) {
     return profs[name];
 };
