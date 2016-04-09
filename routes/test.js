@@ -13,15 +13,13 @@ request({uri: formurl, method: "POST", form: {name: name}}, function (error, res
       var profIds = {};
       var profNames = {};
       var profNamesIds = {};
-
-      console.log(hrefs[2447].children[5].data);
+      console.log(hrefs[5].attribs.href);
       for(var i = 5; i < hrefs.length - 1; i++) {
          profNames[i - 5] = hrefs[i].children[0].data;
-         profIds[i - 5] = hrefs[i].children[5].data;
+         profIds[i - 5] = hrefs[i].attribs.href.split("=")[1];
       }
      
       profNamesIds[0] = profNames;
       profNamesIds[1] = profIds;
-      console.log(profNamesIds[0][2442]);
    }
 });
