@@ -1,0 +1,11 @@
+.info {
+    display: block;
+    min-height: 50px;
+    max-width: 20px;
+}
+
+.tooltip-inner {
+    max-width: 350px;
+    /* If max-width does not work, try using width instead */
+    width: 350px; 
+}
