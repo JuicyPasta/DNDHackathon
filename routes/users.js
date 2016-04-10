@@ -35,11 +35,11 @@ router.get(/\/.*/, function(req, res, next) {
             stdDev:"?",
         },
 		grades: [
-			"A":"?",
-			"B":"?",
-			"C":"?",
-			"D":"?",
-			"F":"?",
+			"A":"0",
+			"B":"0",
+			"C":"0",
+			"D":"0",
+			"F":"0",
 		],
 
     };
@@ -79,7 +79,8 @@ router.get(/\/.*/, function(req, res, next) {
 				var thing = $('u');
 
 				var j = 3;
-				while ((thing[j].children[0].data).indexOf("Receiving") > -1) {
+				while ((thing[j].children[0].data).indexOf("Receiving") > -1 
+				 && data.grades.hasOwnProperty(thing[j].children[0].data.split("'")[1])) {
 					data.grades[thing[j].children[0].data.split("'")[1]] = tds[28 + 11 * j].children[0].data;
 					j++;
 				}
