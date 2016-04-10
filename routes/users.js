@@ -35,7 +35,18 @@ router.get(/\/.*/, function(req, res, next) {
             mode:"?",
             stdDev:"?",
         },
+<<<<<<< HEAD
         photo:"Unknown.jpg"
+=======
+		grades: [
+			"A":"0",
+			"B":"0",
+			"C":"0",
+			"D":"0",
+			"F":"0",
+		],
+
+>>>>>>> 20ae9053290659b5d1caef0abededfe572431f12
     };
 
     // kickoff wordcloud generation
@@ -79,6 +90,14 @@ router.get(/\/.*/, function(req, res, next) {
                     console.log(temp);
                     console.log(id);
                 }
+				var thing = $('u');
+
+				var j = 3;
+				while ((thing[j].children[0].data).indexOf("Receiving") > -1 
+				 && data.grades.hasOwnProperty(thing[j].children[0].data.split("'")[1])) {
+					data.grades[thing[j].children[0].data.split("'")[1]] = tds[28 + 11 * j].children[0].data;
+					j++;
+				}
 
                 res.send(data);
 
