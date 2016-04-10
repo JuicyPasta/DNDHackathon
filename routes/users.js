@@ -3,6 +3,7 @@ var router = express.Router();
 var request = require('request');
 var cheerio = require('cheerio');
 var profsids = require('../profids.js');
+var scraper = require('../scraper.js');
 
 var fs = require('fs');
 
@@ -34,12 +35,21 @@ router.get(/\/.*/, function(req, res, next) {
             mode:"?",
             stdDev:"?",
         },
-
+        photo:"Unknown.jpg"
     };
 
+    // kickoff wordcloud generation
+    scraper(profId, function (err, data, id) {
+        console.log(data);
+        var url = "https://www.jasondavies.com/wordcloud/";
+        
+    });
+
+    
     if (profId) {
-        data.photo = data.teacher.split(' ').join('') + ".jpg";
-        data.cloud = data.teacher.split(' ').join('') + "Cloud.svg";
+        if (fs.existsSync('../photos/' + data.teacher.split(' ').join('') + '.jpg')) {
+            data.photo = data.teacher.split(' ').join('') + ".jpg";
+        }
 
         request(url, function (error, response, body) {
             if (!error && response.statusCode == 200) {
