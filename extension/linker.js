@@ -12,7 +12,7 @@ $('.row-gray').addClass("hoverable");
 function toInsert(data) {
 	var linkStr;
 	if (data.id) {
-		linkStr = "http://polyratings.com/eval.phtml?profid= + data.id";
+		linkStr = "http://polyratings.com/eval.phtml?profid=" + data.id;
 	}
 	else {
 		linkStr = "https://www.google.com/search?q=" + data.teacher + " site:polyratings.com";
@@ -33,42 +33,53 @@ function toInsert(data) {
         </p>
         Total Evaulations ` + data.totalEvals + `
         <br>
+		<a href="` + linkStr + `"> Link to PolyRatings </a>
         </div>
 
         <div class="col-md-2 stat">
-        <b>
+        <b class="h4">
         Overall stats
         </b>
         <br>
-        mean ` + data.overall.mean + `
+        mean: ` + data.overall.mean + `
         <br>
-        mode ` + data.overall.mode + `
+        mode: ` + data.overall.mode + `
         <br>
-        standard deviation ` + data.overall.stdDev + `
+        std deviation: ` + data.overall.stdDev + `
+        <br>
+        # of As: ` + data.grades.A + `
+        <br>
+        # of Bs: ` + data.grades.B + `
+        <br>
+        # of Cs: ` + data.grades.C + `
+        <br>
+        # of Ds: ` + data.grades.D + `
+        <br>
+        # of Fs: ` + data.grades.F + `
         <br>
         </div>
         <div class="col-md-2 stat">
-        <b>
+        <b class="h4">
         Ability to present material
         </b>
         <br>
-        mean ` + data.presentation.mean + `
+        mean: ` + data.presentation.mean + `
         <br>
-        mode ` + data.presentation.mode + `
+        mode: ` + data.presentation.mode + `
         <br>
-        standard deviation ` + data.presentation.stdDev + `
+        std deviation: ` + data.presentation.stdDev + `
         </div>
 
         <div class="col-md-2 stat">
-        <b>
+        <b class="h4">
         Ability to understand
         </b>
         <br>
-        mean ` + data.understandingness.mean + `
+        mean: ` + data.understandingness.mean + `
         <br>
-        mode ` + data.understandingness.mode + `
+        mode: ` + data.understandingness.mode + `
         <br>
-        standard deviation ` + data.understandingness.stdDev + `
+        std deviation: ` + data.understandingness.stdDev + `
         <br>
         </div>
 
@@ -78,11 +89,6 @@ function toInsert(data) {
 
         </div>
         </td>
-        </tr>
-		<tr>
-		<a href="http://polyratings.com/eval.phtml?profid=` + linkStr + `">
-			Link to PolyRatings 
-		</a>
 		
 		</tr>`;
 

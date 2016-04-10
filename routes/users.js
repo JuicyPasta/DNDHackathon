@@ -38,6 +38,7 @@ router.get(/\/.*/, function(req, res, next) {
         },
 
         photo:"Unknown.jpg",
+        cloud:"UnknownCloud.svg",
 
         grades: {
             "A":"0",
@@ -58,8 +59,13 @@ router.get(/\/.*/, function(req, res, next) {
 
 
     if (profId) {
-        if (fs.existsSync('../photos/' + data.teacher.split(' ').join('') + '.jpg')) {
+        if (fs.existsSync('./photos/' + data.teacher.split(' ').join('') + '.jpg')) {
             data.photo = data.teacher.split(' ').join('') + ".jpg";
+            console.log("photo " + data.photo);
+        }
+        if (fs.existsSync('./clouds/' + data.teacher.split(' ').join('') + 'Cloud.svg')) {
+            data.cloud = data.teacher.split(' ').join('') + "Cloud.svg";
+            console.log("cloud " +data.cloud);
         }
 
         request(url, function (error, response, body) {
