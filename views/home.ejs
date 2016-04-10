@@ -214,23 +214,31 @@
          $(event.target).attr("src", "/images/star.gif-c200");
       });
       $("#mainSearch").keyup(function(event) {
-         var searchVal = $("#mainSearch").val();
-         console.log(searchVal);
+         var searchVal = $("#mainSearch").val()
+         if (searchVal) {
          $.post("/teachers/teacherQuery/" + searchVal, function (data){
             $('#searchResultsList').empty();
-            if (data.err){ 
-               console.log('query error');
+            if (data.err){
             } else {
                for (i = 0; i < Object.keys(data).length; i++) {
                   var name = Object.keys(data)[i];
-                  if (name === "DoneganLorraine") {
-                     console.log('changeing')
+                  if (name === "DoneganLorraine") 
                      name = "LorraineDonegan";
                   }
-                  $('#searchResultsList').append("<li><a href='/teachers/" + name + ".html'><div class='teacherName'> " + name + " </div></a><div style='margin-left: 20px'><img src='/images/star.png' class='star'></img><img src='/images/star.png' class='star'></img><img src='/images/star.png' class='star'></img><img src='/images/star.png' class='star'></img><span> (78) / </span> <span style='font-style: italic;'>Graphic Communication </span></div></li>");
-               } 
+                  if (searchVal.length > 3) {
+                     $.get("/users/" + name, function(final) {
+                        console.log(final);
+                        
+                        if (name) {
+                           $('#searchResultsList').append("<li><a href='/teachers/" + name + ".html'><div class='teacherName'> " + name + " </div></a><div style='margin-left: 20px'><img src='/images/star.png' class='star'></img><img src='/images/star.png' class='star'></img><img src='/images/star.png' class='star'></img><img src='/images/star.png' class='star'></img><span> (" + final.totalEvals + ") / </span> <span style='font-style: italic;'>Graphic Communication </span></div></li>");
+                        }
+                     });
+                  } else {
+                     $('#searchResultsList').append("<li><a href='/teachers/" + name + ".html'><div class='teacherName'> " + name + " </div></a><div style='margin-left: 20px'><img src='/images/star.png' class='star'></img><img src='/images/star.png' class='star'></img><img src='/images/star.png' class='star'></img><img src='/images/star.png' class='star'></img><span> (TypeMore) / </span> <span style='font-style: italic;'>Graphic Communication </span></div></li>");
+                  }
             }
          });
+}
       });
    });
 </script>
