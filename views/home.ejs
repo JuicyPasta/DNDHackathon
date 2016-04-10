@@ -2,13 +2,16 @@
 
 <style>
    #searchGroup {
-      margin-top: 300px;
+      margin-top: 200px;
       width: 600px;
       z-index: 1000;
    }
    #searchButton {
       width: 150px;
       background-color: rgb(0, 176, 101);
+      font-size: 20px;
+      height: 54px;
+      line-height: 20px;
 
    }
    .form-control::-webkit-input-placeholder { color: rgba(255, 255, 255, .5); }
@@ -43,10 +46,9 @@
       border-radius: 0 10px 10px 0;
    }
    #logo {
-      margin-left: 100px;
-      margin-top: 75px;
-      width: 100px;
-      height: 100px;
+      margin-top: 0px;
+      width: 500px;
+      height: 300px;
    }
    #searchResults {
       width: 420px;
@@ -81,10 +83,24 @@
    .teacherName {
       font-weight: bold;
    }
+   .college {
+      padding: 0;
+      width: 100%;
+      height: auto;
+   }
+   .col-xs-2 {
+      padding: 0;
+   }
+   #collegesRowOne {
+      margin-top: 30px;
+   }
+   #collegesRowTwo {
+      margin-top: 50px;
+   }
 </style>
 
 <div class="photo first" data-stellar-background-ratio="0.5"><span>
-      <img id="logo" src="/images/HACK_LOGO_LARGE_WHITE.png"> </img>
+      <img id="logo" src="/images/sicklogo.gif"> </img>
    <div class="container">
       <div class="col-lg-5 col-lg-offset-3" id="searchGroup">
            <div class="input-group">
@@ -98,27 +114,58 @@
       </div>
       <div id="searchResults" hidden="hidden">
          <ul id="searchResultsList">
-            <% for (var i =0; i<5; i++) { %>
-               <li>
-                  <div class="teacherName"> Elizabeth Johnson </div>
-                  <div style="margin-left: 20px">
-                     <img src="/images/star.png" class="star"></img>
-                     <img src="/images/star.png" class="star"></img>
-                     <img src="/images/star.png" class="star"></img>
-                     <img src="/images/star.png" class="star"></img>
-                     <span> (78) / </span> <span style="font-style: italic;">Graphic Communication </span>
-                  </div>
-               </li>
-            <% } %>
+            
         </ul>      
       </div>
    </div>
 </div>
 </span></div>
-<div class="photo second" style="height: 300px" data-stellar-background-ratio="0.5"><span>
-
+<div class="photo second" style="height: 850px" data-stellar-background-ratio="0.5"><span>
+   <div class="container" style="text-align: center; margin-top: 40px; font-size: 40px; font-weight: bold; font: helvetica-neu;">
+      <span style="text-align: center; color: black">Colleges
+   </div>
+   <div class="container" style="width: 100%; padding: 0; margin: 0;">
+      <div class="container" id="collegesRowOne">
+         <div class="col-xs-4 col-xs-offset-0">
+            <a href="/colleges/architecture">
+               <img class="college" src="/images/Agriculture, Food, and Enviornmental Sciences02.png"> </img>
+            </a>
+         </div>
+         <div class="col-xs-4 col-xs-offset-0">
+            <a href="/colleges/business">
+               <img class="college" src="/images/Architecture and Environmental Design.png"> </img>
+            </a>
+         </div>
+         <div class="col-xs-4 col-xs-offset-0">
+            <a href="/colleges/engineering">
+               <img class="college" src="/images/Business.png"> </img>
+            </a>
+         </div>
+      </div>
+      <div class="container" id="collegesRowTwo">
+         <div class="col-xs-4 col-xs-offset-0">
+            <a href="/colleges/agriculture">
+               <img class="college" src="/images/Engineering.png"> </img>
+            </a>
+         </div>
+         <div class="col-xs-4 col-xs-offset-0">
+            <a href="/colleges/liberalArts">
+               <img class="college" src="/images/Liberal Arts.png"> </img>
+            </a>
+         </div>
+         <div class="col-xs-4 col-xs-offset-0">
+            <a href="/colleges/scienceAndMath">
+               <img class="college" src="/images/Science and Mathematics.png"> </img>
+            </a>
+         </div>
+      </div>
+   </div>
 </span></div>
-<div class="photo third" data-stellar-background-ratio="0.5"><span></span></div>
+<div class="photo third" style="height: 400px" data-stellar-background-ratio="0.5"><span>
+   <div class="container" style="text-align: center">
+      <img src="/images/hack-tagline.png" style="width:500px; height: auto; margin-top: 160px"></img>
+   </div>
+</span></div>
 <div class="photo fourth" data-stellar-background-ratio="0.5"><span></span></div>
 
 <%- include("footer.ejs") -%>
@@ -160,7 +207,32 @@
         // }, 1000, function() {
         //   // Animation complete.
         // });
-      $(event.target).attr("src", "/images/star.gif-c200");
+         $(event.target).attr("src", "/images/star.gif-c200");
+      });
+      $("#mainSearch").keyup(function(event) {
+         var searchVal = $("#mainSearch").val();
+         console.log(searchVal);
+         $.post("/teachers/teacherQuery/" + searchVal, function (data){
+            if (data.err){ 
+               console.log('query error');
+            } else {
+               console.log(data);
+               for (i = 0; i < data.length; i++) {
+                  // var name = Object.keys(data)[i];
+                  // console.log(name);
+               }
+               // <li>
+               //    <div class="teacherName"> Elizabeth Johnson </div>
+               //    <div style="margin-left: 20px">
+               //       <img src="/images/star.png" class="star"></img>
+               //       <img src="/images/star.png" class="star"></img>
+               //       <img src="/images/star.png" class="star"></img>
+               //       <img src="/images/star.png" class="star"></img>
+               //       <span> (78) / </span> <span style="font-style: italic;">Graphic Communication </span>
+               //    </div>
+               // </li>
+            }
+         });
       });
    });
 </script>
