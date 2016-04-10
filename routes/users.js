@@ -17,6 +17,7 @@ router.get(/\/.*/, function(req, res, next) {
     var url = "http://polyratings.com/stats.phtml?profid=" + profId;
 
     var data = {
+        id:profId,
         teacher: teacher,
         department:"unknown",
         totalEvals: "<5!",

@@ -1,6 +1,8 @@
 .pic {
     border-radius:2px;
-    box-shadow: 2px 2px 5px grey;
+    //box-shadow: 2px 2px 5px grey;
+    border = solid black 1px;
+
 }
 
 .no-height {
@@ -31,4 +33,6 @@
 }
 .profCard {
     box-shadow: 2px 2px 5px grey;
+    margin-left: 15px;
+    background: white;
 }
