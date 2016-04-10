@@ -34,6 +34,13 @@ router.get(/\/.*/, function(req, res, next) {
             mode:"?",
             stdDev:"?",
         },
+		grades: [
+			"A":"?",
+			"B":"?",
+			"C":"?",
+			"D":"?",
+			"F":"?",
+		],
 
     };
 
@@ -69,6 +76,13 @@ router.get(/\/.*/, function(req, res, next) {
                     console.log(temp);
                     console.log(id);
                 }
+				var thing = $('u');
+
+				var j = 3;
+				while ((thing[j].children[0].data).indexOf("Receiving") > -1) {
+					data.grades[thing[j].children[0].data.split("'")[1]] = tds[28 + 11 * j].children[0].data;
+					j++;
+				}
 
                 res.send(data);
 
