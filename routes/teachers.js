@@ -6,6 +6,10 @@ var teachersearch = require('../routes/teachersearch.js');
 
 var fs = require('fs');
 
+router.get('/LorraineDonegan.html', function(req, res, next) {
+   res.render('LorraineDonegan');
+});
+
 router.post('/teacherQuery/:search', function(req, res, next) {
    console.log("received teacher query in teachers.js");
    var teacherMap = teachersearch(req.params.searchString);

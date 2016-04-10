@@ -5,6 +5,7 @@
 
 body {
    font-family: avenir;
+   margin: 0 !important; 
 }
 .photo {
    background-attachment: fixed;

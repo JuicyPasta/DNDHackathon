@@ -166,7 +166,11 @@
       <img src="/images/hack-tagline.png" style="width:500px; height: auto; margin-top: 160px"></img>
    </div>
 </span></div>
-<div class="photo fourth" data-stellar-background-ratio="0.5"><span></span></div>
+<div class="photo fourth" data-stellar-background-ratio="0.5" style="background-color: rgb(0, 176, 101); height: 130.859px"><span>
+   <div class="container" style="text-align:center; ">
+      <img src="/images/hack-footer.png" style="width: 100%; height: auto"> </img>
+   </div>
+</span></div>
 
 <%- include("footer.ejs") -%>
 
@@ -213,24 +217,18 @@
          var searchVal = $("#mainSearch").val();
          console.log(searchVal);
          $.post("/teachers/teacherQuery/" + searchVal, function (data){
+            $('#searchResultsList').empty();
             if (data.err){ 
                console.log('query error');
             } else {
-               console.log(data);
-               for (i = 0; i < data.length; i++) {
-                  // var name = Object.keys(data)[i];
-                  // console.log(name);
-               }
-               // <li>
-               //    <div class="teacherName"> Elizabeth Johnson </div>
-               //    <div style="margin-left: 20px">
-               //       <img src="/images/star.png" class="star"></img>
-               //       <img src="/images/star.png" class="star"></img>
-               //       <img src="/images/star.png" class="star"></img>
-               //       <img src="/images/star.png" class="star"></img>
-               //       <span> (78) / </span> <span style="font-style: italic;">Graphic Communication </span>
-               //    </div>
-               // </li>
+               for (i = 0; i < Object.keys(data).length; i++) {
+                  var name = Object.keys(data)[i];
+                  if (name === "DoneganLorraine") {
+                     console.log('changeing')
+                     name = "LorraineDonegan";
+                  }
+                  $('#searchResultsList').append("<li><a href='/teachers/" + name + ".html'><div class='teacherName'> " + name + " </div></a><div style='margin-left: 20px'><img src='/images/star.png' class='star'></img><img src='/images/star.png' class='star'></img><img src='/images/star.png' class='star'></img><img src='/images/star.png' class='star'></img><span> (78) / </span> <span style='font-style: italic;'>Graphic Communication </span></div></li>");
+               } 
             }
          });
       });
