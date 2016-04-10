@@ -10,6 +10,13 @@ $('.row-white').addClass("hoverable");
 $('.row-gray').addClass("hoverable");
 
 function toInsert(data) {
+	var linkStr;
+	if (data.id) {
+		linkStr = "http://polyratings.com/eval.phtml?profid= + data.id";
+	}
+	else {
+		linkStr = "https://www.google.com/search?q=" + data.teacher + " site:polyratings.com";
+	}
     var toRet = `
         <tr class='info'>
         <td colspan="100%">
@@ -71,7 +78,13 @@ function toInsert(data) {
 
         </div>
         </td>
-        </tr>`;
+        </tr>
+		<tr>
+		<a href="http://polyratings.com/eval.phtml?profid=` + linkStr + `">
+			Link to PolyRatings 
+		</a>
+		
+		</tr>`;
 
     return toRet;
 };
