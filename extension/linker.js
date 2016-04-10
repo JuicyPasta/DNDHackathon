@@ -14,7 +14,7 @@ function toInsert(data) {
         <tr class='info'>
         <td colspan="100%">
         <div class="row info no-height">
-        <div class="col-md-3">
+        <div class="col-md-2 profCard">
         <img class='pic' height='100px' width='100px' src="http://localhost:3000/` + data.photo + `">
         <br>
         <p class = "h3">
@@ -28,7 +28,7 @@ function toInsert(data) {
         <br>
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-2 stat">
         <b>
         Overall stats
         </b>
@@ -40,7 +40,7 @@ function toInsert(data) {
         standard deviation ` + data.overall.stdDev + `
         <br>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 stat">
         <b>
         Ability to present material
         </b>
@@ -52,7 +52,7 @@ function toInsert(data) {
         standard deviation ` + data.presentation.stdDev + `
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-2 stat">
         <b>
         Ability to understand
         </b>

@@ -24,6 +24,9 @@ request(formurl, function (error, response, body) {
 
 profs.GerfenJeffrey = 946;
 profs.MammenKurt = 970;
+profs.KearnsTimothy = 334;
+profs.JaniMeera = 4056;
+
 module.exports = function getId(name) {
     return profs[name];
 };

@@ -35,28 +35,27 @@ router.get(/\/.*/, function(req, res, next) {
             mode:"?",
             stdDev:"?",
         },
-<<<<<<< HEAD
-        photo:"Unknown.jpg"
-=======
-		grades: [
-			"A":"0",
-			"B":"0",
-			"C":"0",
-			"D":"0",
-			"F":"0",
-		],
 
->>>>>>> 20ae9053290659b5d1caef0abededfe572431f12
+        photo:"Unknown.jpg",
+
+        grades: {
+            "A":"0",
+            "B":"0",
+            "C":"0",
+            "D":"0",
+            "F":"0",
+        },
+
     };
 
     // kickoff wordcloud generation
-    scraper(profId, function (err, data, id) {
-        console.log(data);
-        var url = "https://www.jasondavies.com/wordcloud/";
-        
-    });
+    //scraper(profId, function (err, data, id) {
+    //    console.log(data);
+    //    var url = "https://www.jasondavies.com/wordcloud/";
+    //    
+    //});
 
-    
+
     if (profId) {
         if (fs.existsSync('../photos/' + data.teacher.split(' ').join('') + '.jpg')) {
             data.photo = data.teacher.split(' ').join('') + ".jpg";
@@ -85,19 +84,17 @@ router.get(/\/.*/, function(req, res, next) {
                     data.department = deptSelect[3].children[0].data;
                     data.teacher = deptSelect[2].children[0].data;
                     console.log(data.teacher);
-                    var temp = data.teacher.split(' ');
-                    var id = profsids(temp[1] + temp[0]);
-                    console.log(temp);
-                    console.log(id);
-                }
-				var thing = $('u');
 
-				var j = 3;
-				while ((thing[j].children[0].data).indexOf("Receiving") > -1 
-				 && data.grades.hasOwnProperty(thing[j].children[0].data.split("'")[1])) {
-					data.grades[thing[j].children[0].data.split("'")[1]] = tds[28 + 11 * j].children[0].data;
-					j++;
-				}
+                    var thing = $('u');
+
+                    var j = 3;
+                    while ((thing[j].children[0].data).indexOf("Receiving") > -1 
+                            && data.grades.hasOwnProperty(thing[j].children[0].data.split("'")[1])) {
+                        data.grades[thing[j].children[0].data.split("'")[1]] = tds[28 + 11 * j].children[0].data;
+                        j++;
+                    }
+                }
+
 
                 res.send(data);
 

@@ -13,7 +13,6 @@
 
 .hoverable {
     //background-color: black !important;
-
 }
 
 .wordCloud {
@@ -26,4 +25,10 @@
 .cloud {
     width: 500px;
     height: 500px;
+}
+.stat {
+    margin-top:50px;
+}
+.profCard {
+    box-shadow: 2px 2px 5px grey;
 }
