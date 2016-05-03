@@ -1,10 +1,10 @@
 .pic {
     margin-top: 15px;
-    margin-left: 20px;
+    border-left: 20px;
+    border-right: 50px;
     border-radius:2px;
     //border: solid gray 1px; 
     box-shadow: 2px 2px 5px grey;
-
 
 }
 
@@ -40,7 +40,6 @@
     margin-top:-4px;
     margin-left: 11px;
     background: white;
-    height: 300px;
     background:rgb(233,234,237) !important;
     margin-bottom: -4px;
 }

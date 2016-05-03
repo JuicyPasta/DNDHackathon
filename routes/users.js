@@ -9,18 +9,19 @@ var fs = require('fs');
 
 /* GET users listing. */
 router.get(/\/.*/, function(req, res, next) {
-    var url = req.originalUrl;
-    var teacher = url.split('/')[2];
+    var originalUrl = req.originalUrl;
+    var teacher = originalUrl.split('/')[2];
     var profId = profsids(teacher);
 
     console.log(profId);
     var url = "http://polyratings.com/stats.phtml?profid=" + profId;
 
     var data = {
+        found:false,
         id:profId,
         teacher: teacher,
         department:"unknown",
-        totalEvals: "<5!",
+        totalEvals: "< 5",
         overall:{
             mean:"?",
             mode:"?",
@@ -74,6 +75,7 @@ router.get(/\/.*/, function(req, res, next) {
                 $ = cheerio.load(body);
                 var tds = $('td');
                 if (tds[28] && tds[28].children[0].data.trim() !== undefined) {
+                    data.found = true;
                     data.totalEvals = tds[28].children[0].data.trim();
                     data.overall.mean = tds[30].children[0].data;
                     data.overall.mode = tds[34].children[0].data;
