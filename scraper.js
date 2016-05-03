@@ -15,7 +15,7 @@ module.exports = function scrape(id, callback){
                 words = words.concat(arr[i].split(" "));
             }
 
-            callback(null, words.join(' '), id);
+            callback(null, words, id);
             //var dict = {};
             //for (var i = 0, l = words.length; i<l; i+=1){
             //    var word = words[i].toLowerCase();
