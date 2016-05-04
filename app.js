@@ -7,7 +7,9 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var teachers = require('./routes/teachers')
+var teachers = require('./routes/teachers');
+
+require('./modules/index-teachers.js').init();
 
 var app = express();
 

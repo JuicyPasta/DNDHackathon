@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var cheerio = require('cheerio');
-var profsids = require('../profids.js');
-var scraper = require('../scraper.js');
+var profsids = require('../modules/index-teachers.js');
+var scraper = require('../modules/comment-scrape.js');
 
 var fs = require('fs');
 
@@ -48,16 +48,7 @@ router.get(/\/.*/, function(req, res, next) {
             "D":"0",
             "F":"0",
         },
-
     };
-
-    // kickoff wordcloud generation
-    //scraper(profId, function (err, data, id) {
-    //    console.log(data);
-    //    var url = "https://www.jasondavies.com/wordcloud/";
-    //    
-    //});
-
 
     if (profId) {
         if (fs.existsSync('./photos/' + data.teacher.split(' ').join('') + '.jpg')) {
@@ -97,8 +88,7 @@ router.get(/\/.*/, function(req, res, next) {
                     var thing = $('u');
 
                     var j = 3;
-                    while ((thing[j].children[0].data).indexOf("Receiving") > -1 
-                            && data.grades.hasOwnProperty(thing[j].children[0].data.split("'")[1])) {
+                    while ((thing[j].children[0].data).indexOf("Receiving") > -1 && data.grades.hasOwnProperty(thing[j].children[0].data.split("'")[1])) {
                         data.grades[thing[j].children[0].data.split("'")[1]] = tds[28 + 11 * j].children[0].data;
                         j++;
                     }
