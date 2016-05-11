@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var cheerio = require('cheerio');
-var teachersearch = require('../routes/teachersearch.js');
+var teachersearch = require('../modules/index-teachers.js').getId;
 
 var fs = require('fs');
 

@@ -11,7 +11,7 @@ var fs = require('fs');
 router.get(/\/.*/, function(req, res, next) {
     var originalUrl = req.originalUrl;
     var teacher = originalUrl.split('/')[2];
-    var profId = profsids(teacher);
+    var profId = profsids.getId(teacher);
 
     console.log(profId);
     var url = "http://polyratings.com/stats.phtml?profid=" + profId;

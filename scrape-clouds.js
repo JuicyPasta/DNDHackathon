@@ -1,28 +1,21 @@
 var scrape = require('./modules/comment-scrape.js');
-var profIds = require('./modules/index-teachers.js');
+var teachers = require('./modules/index-teachers.js');
 var Canvas = require("canvas");
 var cloudgen = require('d3-cloud');
 var fs = require('fs');
 
-profIds.init();
-console.log(profIds);
-
 var width = 250;
 var height = 250;
 
-var profs = profIds.profs;
+var profs = teachers.profs;
 
 for (var teacher in profs) {
-    console.log(teacher);
-
     if (profs.hasOwnProperty(teacher)) {
-        console.log(teacher);
-
         (function(teacher) {
-            //if (teacher[0] == 'A')
+            if (teacher[0] == 'A' && teacher [1] == 'n')
             scrape(profs[teacher], function (err, data, id) {
                 if (!err) {
-                    cloud(teacher, data, function () {
+                    generate(teacher, data, function () {
                         console.log('cloud generated for: ' + teacher);
                     });
                 }
@@ -31,21 +24,28 @@ for (var teacher in profs) {
     }
 }
 
-function generate(fileName, words, cb) {
+function generate(fileName, wordMap, cb) {
     var outStream = fs.createWriteStream(__dirname + '/clouds/' + fileName + '.png');
     var canvas = new Canvas(width,height);
     
-    words = words.map(function(d) {
-        return {text: d, size: 10 + Math.random() * 90};
-    });
+    var words = [];
+
+    for (var word in wordMap) {
+        var curWord = {text: word, size: 10 + wordMap[word] * 20};
+        words.push(curWord);
+    }
+    //console.log(words);
+
+    var colors = ['#3498DB', '#1478BB', '#00589B', '#54A8FB', '#74C8FF'];
 
     cloudgen().size([width, height])
         .canvas(function() { return canvas;})
         .words(words)
         .padding(5)
-        //        .rotate(function() { return ~~(Math.random() * 2) * 90; })
+        .rotate(function() { return ~~(Math.random() * 2) * 90; })
         .font("Impact")
         .fontSize(function(d) { return d.size; })
+
         .on("end", function () {
             canvas.pngStream().pipe(outStream);
             cb(null, null);
