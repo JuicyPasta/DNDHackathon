@@ -9,18 +9,13 @@ module.exports = function scrape(id, callback){
                 return callback("Error 404: Not Found.", null, id);
             }
 
-            var words = {};
+            var words = [];
             for (var i = 0, l = arr.length; i<l;i+=1){
                 arr[i] = arr[i].substring(arr[i].indexOf(">")+1, arr[i].indexOf("</td>")).replace("\n"," ").replace("&#039;"," ").replace("\t"," ").replace("&quot;"," ").replace(/[^a-zA-Z']/g," ");
                 
-                curWords = arr[i].split(" ");
-                for (var wordIndex in curWords) {
-                    var word = curWords[wordIndex].toLowerCase();
-                    if (word)
-                        words[word] = words[word] ? words[word] + 1 : 1;
-                }
+                curWords = arr[i].replace(/[!\.,:;\?]/g, '').split(" ");
+                words = words.concat(curWords);
             }
-
             callback(null, words, id);
             //var dict = {};
             //for (var i = 0, l = words.length; i<l; i+=1){
