@@ -6,7 +6,10 @@
     "version": "4.2.0",
     "permissions": [
         "webRequest",
-        "http://localhost:3000/"
+        "http://localhost:3000/",
+        "http://52.9.40.156:3000/",
+        "http://52.9.40.156/"
+        
     ],
     "icons": { 
         "48": "logo48.png",

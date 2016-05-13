@@ -7,6 +7,8 @@ $('.row-gray').click(clicked);
 $('.row-white').addClass("hoverable");
 $('.row-gray').addClass("hoverable");
 
+var host = 'http://52.9.40.156:3000/';
+
 function toInsert(data) {
     var linkStr = data.id ? "http://polyratings.com/eval.phtml?profid=" + data.id : "https://www.google.com/search?q=" + data.teacher + " site:polyratings.com";
 
@@ -15,7 +17,7 @@ function toInsert(data) {
         <td colspan="100%">
         <div class="row info">
         <div class="col-md-2 profCard">
-        <img class='pic' height='100px' width='100px' src="http://localhost:3000/` + data.photo + `">
+        <img class='pic' height='100px' width='100px' src="`+ host + data.photo + `">
         <br>
         <p class = "h3">
 
@@ -93,7 +95,7 @@ function toInsert(data) {
 
     toRet += `
         <div class="col-md-3 wordCloud">
-        <img class='cloud' src="http://localhost:3000/` + data.cloud + `">
+        <img class='cloud' src="`+ host + data.cloud + `">
         </div>
 
         </div>
@@ -112,7 +114,7 @@ function clicked() {
 
     var fullName = normalizeName(isNaN(fullNameReg) ? fullNameReg : fullNameNote);
 
-    $.get("http://localhost:3000/users/" + fullName, function(data) {
+    $.get(host + "users/" + fullName, function(data) {
         if (current.next().attr('class') == 'info') {
             current.next().remove();
         } else {
