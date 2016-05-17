@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var scrapeData = require('../modules/scrape-metadata.js');
 var cache = require('../modules/cache.js');
+var cloud = require('../modules/cloud.js');
 
 // the extension calls this from PASS
 router.use(function (req, res, next) {
@@ -15,6 +16,9 @@ router.get('/:teacher', function (req, res) {
     if (!teacher) return res.sendStatus(404);
 
     cache.get('teacher:' + teacher).then(function (data) {
+        // redis remembers the card but someone cleaned out clouds/, make it again
+        if (data && data.cloud !== 'UnknownCloud.svg' && !cloud.exists(data.key)) data = null;
+
         if (data) {
             console.log('found old data!');
             return res.json(data);
