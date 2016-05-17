@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>PASS (mock)</title>
+<!--
+    fake PASS section list so the extension has something to run on without a
+    Cal Poly login. the rows are shaped like the real thing: .row-white/.row-gray
+    and the instructor is the 5th cell as "Last,First".
+-->
+<style>
+    body { margin: 0; font-family: Arial, Helvetica, sans-serif; font-size: 13px; background: #e9eaed; }
+    .top { background: #154734; color: white; padding: 12px 20px; }
+    .top b { font-size: 20px; letter-spacing: 1px; }
+    .top span { color: #c69214; margin-left: 10px; }
+    .mock { float: right; font-size: 11px; color: #cfd8d3; margin-top: 5px; }
+    .tabs { background: #c69214; padding: 0 20px; }
+    .tabs a { display: inline-block; padding: 7px 14px; color: white; font-weight: bold; text-decoration: none; }
+    .tabs a.on { background: #e9eaed; color: #154734; }
+    .wrap { padding: 15px 20px 40px; }
+    .course { background: white; border: 1px solid #bbb; margin-bottom: 14px; }
+    .course h3 { margin: 0; padding: 8px 10px; background: #dfe3e0; color: #154734; font-size: 15px; border-bottom: 1px solid #bbb; }
+    table { width: 100%; border-collapse: collapse; }
+    th { text-align: left; padding: 5px 8px; background: #f4f4f4; border-bottom: 1px solid #ccc; font-size: 12px; }
+    td { padding: 6px 8px; border-bottom: 1px solid #e3e3e3; }
+    .row-white { background: white; cursor: pointer; }
+    .row-gray { background: #f0f0f0; cursor: pointer; }
+    .open { color: #1b7f3b; font-weight: bold; }
+    .full { color: #b3261e; font-weight: bold; }
+</style>
+</head>
+<body>
+<div class="top"><b>PASS</b><span>Plan A Student Schedule</span><div class="mock">local mock for the Mustang Marks demo</div></div>
+<div class="tabs"><a href="#">Select Courses</a><a href="#" class="on">Select Sections</a><a href="#">View Schedules</a></div>
+<div class="wrap">
+
+<div class="course">
+<h3>CPE 101 - Fundamentals of Computer Science I</h3>
+<table>
+<tr><th>Sect</th><th>Class #</th><th>Type</th><th>GE</th><th>Instructor</th><th>Days</th><th>Start</th><th>End</th><th>Room</th><th>Open</th><th>Wait</th></tr>
+<tr class="row-white"><td>01</td><td>3412</td><td>LEC</td><td></td><td>Workman,Julie</td><td>MWF</td><td>9:10 AM</td><td>10:00 AM</td><td>014-0256</td><td class="open">4</td><td>0</td></tr>
+<tr class="row-gray"><td>03</td><td>3414</td><td>LEC</td><td></td><td>Hatalsky,Paul</td><td>MWF</td><td>10:10 AM</td><td>11:00 AM</td><td>014-0255</td><td class="full">0</td><td>7</td></tr>
+<tr class="row-white"><td>05</td><td>3416</td><td>LEC</td><td></td><td>Dalbey,John</td><td>TR</td><td>12:10 PM</td><td>1:30 PM</td><td>186-C201</td><td class="open">11</td><td>0</td></tr>
+<tr class="row-gray"><td>07</td><td>3418</td><td>LEC</td><td></td><td>Staley,Clint</td><td>TR</td><td>8:10 AM</td><td>9:30 AM</td><td>014-0256</td><td class="open">2</td><td>0</td></tr>
+<tr class="row-white"><td>09</td><td>3420</td><td>LEC</td><td></td><td>Kearns,Timothy</td><td>MWF</td><td>1:10 PM</td><td>2:00 PM</td><td>180-0101</td><td class="full">0</td><td>3</td></tr>
+</table>
+</div>
+
+<div class="course">
+<h3>CPE 233 - Computer Design and Assembly Language Programming</h3>
+<table>
+<tr><th>Sect</th><th>Class #</th><th>Type</th><th>GE</th><th>Instructor</th><th>Days</th><th>Start</th><th>End</th><th>Room</th><th>Open</th><th>Wait</th></tr>
+<tr class="row-white"><td>01</td><td>3502</td><td>LEC</td><td></td><td>Mealy,Bryan</td><td>MWF</td><td>11:10 AM</td><td>12:00 PM</td><td>020-0129</td><td class="open">6</td><td>0</td></tr>
+<tr class="row-gray"><td>03</td><td>3504</td><td>LEC</td><td></td><td>Perks,Gary</td><td>TR</td><td>2:10 PM</td><td>3:30 PM</td><td>020-0129</td><td class="full">0</td><td>12</td></tr>
+</table>
+</div>
+
+<div class="course">
+<h3>MATH 143 - Calculus III</h3>
+<table>
+<tr><th>Sect</th><th>Class #</th><th>Type</th><th>GE</th><th>Instructor</th><th>Days</th><th>Start</th><th>End</th><th>Room</th><th>Open</th><th>Wait</th></tr>
+<tr class="row-white"><td>01</td><td>4120</td><td>LEC</td><td>B1</td><td>Alongi,John</td><td>MTRF</td><td>7:10 AM</td><td>8:00 AM</td><td>038-0219</td><td class="open">9</td><td>0</td></tr>
+<tr class="row-gray"><td>02</td><td>4121</td><td>LEC</td><td>B1</td><td>Jenkin,Bryce</td><td>MTRF</td><td>9:10 AM</td><td>10:00 AM</td><td>038-0219</td><td class="open">1</td><td>0</td></tr>
+<tr class="row-white"><td>03</td><td>4122</td><td>LEC</td><td>B1</td><td>Retsek,Dylan</td><td>MTRF</td><td>12:10 PM</td><td>1:00 PM</td><td>038-0220</td><td class="full">0</td><td>5</td></tr>
+</table>
+</div>
+
+</div>
+</body>
+</html>

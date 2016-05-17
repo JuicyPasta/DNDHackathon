@@ -1,29 +1,40 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
 
     "name": "PASS2PolyRatings2",
     "description": "Link teacher names on PASS to PolyRatings.",
-    "version": "4.2.0",
+    "version": "5.0.0",
     "permissions": [
-        "webRequest",
-        "http://localhost:3000/",
-        "http://52.9.40.156:3000/",
-        "http://52.9.40.156/"
-        
+        "storage"
     ],
-    "icons": { 
+    "host_permissions": [
+        "http://localhost/*",
+        "http://127.0.0.1/*"
+    ],
+    "optional_host_permissions": [
+        "http://*/*",
+        "https://*/*"
+    ],
+    "icons": {
         "48": "logo48.png",
-        "128": "logo128.png" 
+        "128": "logo128.png"
     },
     "content_scripts": [
         {
-            "matches": ["http://pass.calpoly.edu/main.html"],
-            "js":["thirdParty/jquery-2.2.3.min.js", "thirdParty/bootstrap.min.js" , "linker.js"],
+            "matches": [
+                "*://pass.calpoly.edu/main.html",
+                "http://localhost/demo/pass.html"
+            ],
+            "js": ["thirdParty/jquery-2.2.3.min.js", "linker.js"],
             "css": ["thirdParty/bootstrap.min.css", "thirdParty/style.css"],
             "run_at": "document_end"
         }
     ],
     "background": {
-        "scripts": ["thirdParty/jquery-2.2.3.min.js"]
+        "service_worker": "background.js"
+    },
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": false
     }
 }

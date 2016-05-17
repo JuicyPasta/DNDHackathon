@@ -1,34 +1,32 @@
-var idList = {"Walters,Dirk":["682"]};
-var ratings = {};
-
 $('.row-white').click(clicked);
 $('.row-gray').click(clicked);
 
 $('.row-white').addClass("hoverable");
 $('.row-gray').addClass("hoverable");
 
-var host = 'http://52.9.40.156:3000/';
+function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+}
 
-function toInsert(data) {
-    var linkStr = data.id ? "http://polyratings.com/eval.phtml?profid=" + data.id : "https://www.google.com/search?q=" + data.teacher + " site:polyratings.com";
-
+function toInsert(data, host) {
     var toRet = `
         <tr class='info'>
         <td colspan="100%">
         <div class="row info">
         <div class="col-md-2 profCard">
-        <img class='pic' height='100px' width='100px' src="`+ host + data.photo + `">
+        <img class='pic' height='100px' width='100px' src="` + host + esc(data.photo) + `">
         <br>
         <p class = "h3">
-
-        ` + data.teacher + `
+        ` + esc(data.teacher) + `
         </p>
         <p class = "h5">
-        ` + data.department + `
+        ` + esc(data.department) + `
         </p>
-        Total Evaulations ` + data.totalEvals + `
+        Total Evaulations ` + esc(data.totalEvals) + `
         <br>
-        <a href="` + linkStr + `"> Link to PolyRatings </a>
+        <a href="` + esc(data.link) + `" target="_blank"> Link to PolyRatings </a>
         </div>
         `;
 
@@ -39,22 +37,18 @@ function toInsert(data) {
                 Overall stats
                 </b>
                 <br>
-                Mean Rating: ` + data.overall.mean + `
-                <br>
-                Mode: ` + data.overall.mode + `
-                <br>
-                Std deviation: ` + data.overall.stdDev + `
+                Mean Rating: ` + esc(data.overall.mean) + ` / 4
                 <br>
                 <br>
-                # of As: ` + data.grades.A + `
+                # of As: ` + esc(data.grades.A) + `
                 <br>
-                # of Bs: ` + data.grades.B + `
+                # of Bs: ` + esc(data.grades.B) + `
                 <br>
-                # of Cs: ` + data.grades.C + `
+                # of Cs: ` + esc(data.grades.C) + `
                 <br>
-                # of Ds: ` + data.grades.D + `
+                # of Ds: ` + esc(data.grades.D) + `
                 <br>
-                # of Fs: ` + data.grades.F + `
+                # of Fs: ` + esc(data.grades.F) + `
                 <br>
                 </div>
                 <div class="col-md-2 stat">
@@ -62,30 +56,20 @@ function toInsert(data) {
                 Ability to present material
                 </b>
                 <br>
-                Mean: ` + data.presentation.mean + `
+                Mean: ` + esc(data.presentation.mean) + ` / 4
                 <br>
-                Mode: ` + data.presentation.mode + `
                 <br>
-                Std deviation: ` + data.presentation.stdDev + `
-                </div>
-
-                <div class="col-md-2 stat">
                 <b class="h4">
                 Ability to understand
                 </b>
                 <br>
-                Mean: ` + data.understandingness.mean + `
-                <br>
-                Mode: ` + data.understandingness.mode + `
-                <br>
-                Std deviation: ` + data.understandingness.stdDev + `
-                <br>
+                Mean: ` + esc(data.understandingness.mean) + ` / 4
                 </div>
                 `;
         }
         else {
             toRet += `
-                <div class="col-md-6 stat">
+                <div class="col-md-4 stat">
                 <b class="h2">
                 Polyratings metadata not found
                 </b>
@@ -95,7 +79,7 @@ function toInsert(data) {
 
     toRet += `
         <div class="col-md-3 wordCloud">
-        <img class='cloud' src="`+ host + data.cloud + `">
+        <img class='cloud' src="` + host + esc(data.cloud) + `">
         </div>
 
         </div>
@@ -114,19 +98,24 @@ function clicked() {
 
     var fullName = normalizeName(isNaN(fullNameReg) ? fullNameReg : fullNameNote);
 
-    $.get(host + "users/" + fullName, function(data) {
-        if (current.next().attr('class') == 'info') {
-            current.next().remove();
-        } else {
-            var element = $(toInsert(data));
-            current.after(element);
+    if (current.next().attr('class') == 'info') {
+        current.next().remove();
+        return;
+    }
+
+    chrome.runtime.sendMessage({ type: 'lookup', name: fullName }, function (resp) {
+        if (!resp || resp.error) {
+            console.log('mustang marks: ' + (resp ? resp.error : 'no answer') + ', is the server running?');
+            return;
+        }
+        if (current.next().attr('class') != 'info') {
+            current.after($(toInsert(resp.data, resp.host)));
         }
     });
 }
 
 function normalizeName(name) {
-    name = name.split(' ')[0];
+    name = name.trim().replace(/,\s+/g, ',').split(' ')[0];
     name = name.split(',').join('');
     return name;
 }
-
