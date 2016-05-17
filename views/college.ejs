@@ -1,0 +1,41 @@
+<%- include("header.ejs") -%>
+<style>
+   .collegeHeader {
+      position: relative;
+      background: url('/images/backgroundphoto.png') center / cover;
+      color: white;
+      padding: 25px 40px 30px;
+      text-align: center;
+   }
+   .collegeHeader:before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(30, 30, 30, .55);
+   }
+   .collegeHeader > * { position: relative; }
+   .profHeader > .logoLink, .collegeHeader > .logoLink { position: absolute; left: 30px; top: 25px; }
+   .smallLogo { width: 60px; }
+   .collegeHeader h1 { font-size: 40px; font-weight: bold; margin-top: 35px; }
+   .profList { max-width: 900px; margin: 20px auto 60px; padding: 0; list-style: none; columns: 2; }
+   .profList li { break-inside: avoid; padding: 10px 15px; border-bottom: 1px solid #eee; }
+</style>
+
+<div class="collegeHeader">
+   <a class="logoLink" href="/"><img class="smallLogo" src="/images/HACK_LOGO_LARGE_WHITE.png"></a>
+   <%- include("search.ejs") -%>
+   <h1><%= college.name %></h1>
+   <div>most reviewed first</div>
+</div>
+
+<ul class="profList">
+   <% list.forEach(function (t) { %>
+   <li>
+      <a href="/teachers/<%= t.key %>.html"><div class="teacherName"><%= t.name %></div></a>
+      <div class="teacherMeta"><% for (var i = 0; i < 4; i++) { %><img src="/images/star.png" class="star<%= i < Math.round(t.rating) ? '' : ' dim' %>"><% } %>
+         <span> (<%= t.totalEvals %>) / </span><span style="font-style: italic;"><%= t.department %></span></div>
+   </li>
+   <% }) %>
+</ul>
+
+<%- include("footer.ejs") -%>

@@ -1,95 +1,20 @@
 <%- include("header.ejs") -%>
 
 <style>
-   #searchGroup {
-      margin-top: 200px;
-      width: 600px;
-      z-index: 1000;
-   }
-   #searchButton {
-      width: 150px;
-      background-color: rgb(0, 176, 101);
-      font-size: 20px;
-      height: 54px;
-      line-height: 20px;
-
-   }
-   .form-control::-webkit-input-placeholder { color: rgba(255, 255, 255, .5); }
-   .form-control:-moz-placeholder { color: rgba(255, 255, 255, .5); }
-   .form-control::-moz-placeholder { color: rgba(255, 255, 255, .5); }
-   .form-control:-ms-input-placeholder { color: rgba(255, 255, 255, .5); }
-   #mainSearch {
-      background-color: rgba(255, 255, 255, .5);
-      color: rgba(255, 255, 255, .72);
-      font-size: 20px;
-      border: none;
-   }
-   .btn-xlarge {
-       padding: 18px 22px;
-      color: rgba(255, 255, 255, .72);
-       line-height: normal;
-       -webkit-border-radius: 8px;
-          -moz-border-radius: 8px;
-               border-radius: 8px;
-   }
-   .input-xlarge {
-       line-height: 27px;
-       padding-top: 27px;
-       padding-left: 15px;
-       padding-right: 30px;
-       padding-bottom: 27px;
-       -webkit-border-radius: 8px;
-          -moz-border-radius: 8px;
-               border-radius: 8px;
-   }
-   #searchButton {
-      border-radius: 0 10px 10px 0;
-   }
    #logo {
-      margin-top: 0px;
+      display: block;
+      margin: 0 auto;
+      padding-top: 60px;
       width: 500px;
-      height: 300px;
+      height: auto;
    }
-   #searchResults {
-      width: 420px;
-      height: 150px;
-      border-radius: 0 0 10px 10px;
-   }
-   #searchResults > #searchResultsList {
-      width: 100%;
-      height: 100%;
-      padding: 0;
-      margin-right: 0;
-      background-color: rgba(255, 255, 255, .6);
-      margin-bottom: 0px;
-      border-radius: 0 0 10px 10px;
-   }
-   #searchResults > ul > li {
-      padding-left: 15px;
-      margin-top: 10px;
-      margin-bottom: 10px;
-      height: 40px;
-      width: 100%;
-   }
-   #mainSearch {
-      border-radius: 10px 0 0 10px;
-   }
-   #searchResults > ul{height:200px; width:18%;}
-   #searchResults > ul{overflow:hidden; overflow-y:scroll;}
-   .star {
-      width: 20px; 
-      height: 20px
-   }
-   .teacherName {
-      font-weight: bold;
+   #searchGroup {
+      margin-top: 60px;
    }
    .college {
       padding: 0;
       width: 100%;
       height: auto;
-   }
-   .col-xs-2 {
-      padding: 0;
    }
    #collegesRowOne {
       margin-top: 30px;
@@ -99,27 +24,10 @@
    }
 </style>
 
-<div class="photo first" data-stellar-background-ratio="0.5"><span>
-      <img id="logo" src="/images/sicklogo.gif"> </img>
-   <div class="container">
-      <div class="col-lg-5 col-lg-offset-3" id="searchGroup">
-           <div class="input-group">
-               <input id="mainSearch" type="text" class="form-control input-xlarge" placeholder="Search by name, class title, or keyword" /> 
-               <span class="input-group-btn">
-                   <button id="searchButton" class="btn btn-xlarge" type="button">Go!</button>
-               </span>
-            <div>
-
-         </div>
-      </div>
-      <div id="searchResults" hidden="hidden">
-         <ul id="searchResultsList">
-            
-        </ul>      
-      </div>
-   </div>
+<div class="photo first" style="height: 700px" data-stellar-background-ratio="0.5">
+   <img id="logo" src="/images/sicklogo.gif">
+   <%- include("search.ejs") -%>
 </div>
-</span></div>
 <div class="photo second" style="height: 850px" data-stellar-background-ratio="0.5"><span>
    <div class="container" style="text-align: center; margin-top: 40px; font-size: 40px; font-weight: bold; font: helvetica-neu;">
       <span style="text-align: center; color: black">Colleges
@@ -176,69 +84,10 @@
 
 <script>
    $(function(){
-         $.stellar({
-            horizontalScrolling: false,
-            verticalOffset: 0,
-            responsive: true
-         });
-      });
-   $('document').ready(function (){
-      // var success = $("#success");
-      // var danger = $("#danger");
-
-      $("#mainSearch").click(function(e){
-            $('#mainSearch').css('border-radius', '10px 0px 0px 0px');
-         $('#searchResults').slideDown(function(){
-            $('#searchResults').css("display", "block");
-         });
-      });
-      $(document).click(function(event){
-         if (!$(event.target).is('#mainSearch') && !$(event.target).parents().is('#searchResults') && !$(event.target).is("#searchResults")) {
-            $('#searchResults').slideUp(function(){
-            $('#mainSearch').css('border-radius', '10px 0 0 10px');
-               $('#searchResults').css("display", "none");
-            });
-         }
-      });
-      var numRand = Math.floor(Math.random()*1000) + parseFloat(0);
-      var numRand1 = Math.floor(Math.random()*1000) + parseFloat(0);
-      var numRand2 = Math.floor(Math.random()*1000) + parseFloat(0);
-      var numRand3 = Math.floor(Math.random()*1000) + parseFloat(0);
-      var numRand4 = Math.floor(Math.random()*1000) + parseFloat(0);
-      $(".star").click(function(event) {
-        //  $(event.target).animate({
-        //   marginLeft: '20px'
-        // }, 1000, function() {
-        //   // Animation complete.
-        // });
-         $(event.target).attr("src", "/images/star.gif-c200");
-      });
-      $("#mainSearch").keyup(function(event) {
-         var searchVal = $("#mainSearch").val();
-
-         if (searchVal) {
-         $.post("/teachers/teacherQuery/" + searchVal, function (data){
-            $('#searchResultsList').empty();
-            if (data.err){
-            } else {
-               for (i = 0; i < Object.keys(data).length; i++) {
-                  var name = Object.keys(data)[i];
-                  if (name === "DoneganLorraine") {
-                     name = "LorraineDonegan";
-                  }
-                  if (searchVal.length > 3) {
-                     $.get("/users/" + name, function(final) {
-                        if (name) {
-                           $('#searchResultsList').append("<li><a href='/teachers/" + name + ".html'><div class='teacherName'> " + name + " </div></a><div style='margin-left: 20px'><img src='/images/star.png' class='star'></img><img src='/images/star.png' class='star'></img><img src='/images/star.png' class='star'></img><img src='/images/star.png' class='star'></img><span> (" + final.totalEvals + ") / </span> <span style='font-style: italic;'>Graphic Communication </span></div></li>");
-                        }
-                     });
-                  } else {
-                     $('#searchResultsList').append("<li><a href='/teachers/" + name + ".html'><div class='teacherName'> " + name + " </div></a><div style='margin-left: 20px'><img src='/images/star.png' class='star'></img><img src='/images/star.png' class='star'></img><img src='/images/star.png' class='star'></img><img src='/images/star.png' class='star'></img><span> (TypeMore) / </span> <span style='font-style: italic;'>Graphic Communication </span></div></li>");
-                  }
-               }
-            }
-            });
-         }
+      $.stellar({
+         horizontalScrolling: false,
+         verticalOffset: 0,
+         responsive: true
       });
    });
 </script>
