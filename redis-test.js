@@ -1,29 +1,22 @@
-var endpoint = "127.0.0.1";
+// make sure redis is up: REDIS_URL=redis://127.0.0.1:6379 node redis-test.js
+var redis = require("redis");
 
-var redis = require("redis"),
-    client = redis.createClient(6379, endpoint, {no_ready_check: true});
-
-
-client.on('connect', function () {
-    console.log("connected!");
-});
+var client = redis.createClient({ url: process.env.REDIS_URL || "redis://127.0.0.1:6379" });
 
 client.on('error', function (err) {
     console.log("ERR:");
-    console.log(err);
+    console.log(err.message);
+    process.exit(1);
 });
 
-client.set("test", "OK");
+(async function () {
+    await client.connect();
+    console.log("connected!");
 
-// This will return a JavaScript String 
-client.get("test", function (err, reply) {
-    console.log(reply); // Will print `OK` 
-});
+    await client.set("test", "OK");
+    console.log(await client.get("test")); // OK
+    console.log(await client.get("not there")); // null
 
-client.get("not there", function (err, reply) {
-    console.log(err);
-    console.log(reply);
-});
-
-
-client.quit();
+    await client.del("test");
+    await client.quit();
+})();

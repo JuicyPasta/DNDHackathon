@@ -3,7 +3,7 @@ all:
 
 start:
 	npm install
-	pm2 restart 0
+	npm start
 
 deploy:
 

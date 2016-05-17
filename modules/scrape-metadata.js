@@ -1,79 +1,121 @@
-var request = require('request');
-var cheerio = require('cheerio');
+// everything the PASS card and the teacher page need for one prof
+var fs = require('fs');
+var path = require('path');
+var polyratings = require('./polyratings.js');
+var teachers = require('./index-teachers.js');
+var cloud = require('./cloud.js');
 
-module.exports = function (cb) {
+var PHOTOS = path.join(__dirname, '..', 'photos');
+var SAMPLE = path.join(__dirname, '..', 'data', 'sample.json');
 
-    var data = {
-        found:false,
-        id:profId,
-        teacher: teacher,
-        department:"unknown",
-        totalEvals: "< 5",
-        overall:{
-            mean:"?",
-            mode:"?",
-            stdDev:"?",
-        },
-        presentation:{
-            mean:"?",
-            mode:"?",
-            stdDev:"?",
-        },
-        understandingness:{
-            mean:"?",
-            mode:"?",
-            stdDev:"?",
-        },
+function sampleCard(id) {
+    if (!fs.existsSync(SAMPLE)) return null;
+    var cards = JSON.parse(fs.readFileSync(SAMPLE, 'utf8')).cards;
+    return cards[id] || null;
+}
 
-        photo:"Unknown.jpg",
-        cloud:"UnknownCloud.svg",
+function fixed(n) {
+    return typeof n === 'number' ? n.toFixed(2) : '?';
+}
 
-        grades: {
-            "A":"0",
-            "B":"0",
-            "C":"0",
-            "D":"0",
-            "F":"0",
-        },
+function blank(name) {
+    return {
+        found: false,
+        id: null,
+        key: name,
+        teacher: name,
+        department: 'unknown',
+        totalEvals: '< 5',
+        overall: { mean: '?' },
+        presentation: { mean: '?' },
+        understandingness: { mean: '?' },
+        grades: { A: 0, B: 0, C: 0, D: 0, F: 0 },
+        courses: [],
+        tags: [],
+        reviews: [],
+        words: {},
+        photo: 'Unknown.jpg',
+        cloud: 'UnknownCloud.svg',
+        link: 'https://www.google.com/search?q=' + encodeURIComponent(name + ' site:polyratings.dev'),
     };
+}
 
-    request(url, function (error, response, body) {
-        if (err)
-            return cb(error, null);
-        if (response.statusCode != 200)
-            return cb("http error", null);
+function fromProf(prof) {
+    var key = teachers.key(prof.lastName, prof.firstName);
+    var data = blank(key);
+    data.found = true;
+    data.id = prof.id;
+    data.teacher = prof.firstName + ' ' + prof.lastName;
+    data.department = prof.department;
+    data.totalEvals = prof.numEvals;
+    data.overall.mean = fixed(prof.overallRating);
+    data.presentation.mean = fixed(prof.materialClear);
+    data.understandingness.mean = fixed(prof.studentDifficulties);
+    data.courses = prof.courses || [];
+    data.tags = Object.keys(prof.tags || {})
+        .sort(function (a, b) { return prof.tags[b] - prof.tags[a]; })
+        .filter(function (t) { return prof.tags[t] > 0; })
+        .slice(0, 3);
+    data.link = 'https://polyratings.dev/professor/' + prof.id;
 
-        $ = cheerio.load(body);
-        var tds = $('td');
-        if (tds[28] && tds[28].children[0].data.trim() !== undefined) {
-            data.found = true;
-            data.totalEvals = tds[28].children[0].data.trim();
-            data.overall.mean = tds[30].children[0].data;
-            data.overall.mode = tds[34].children[0].data;
-            data.overall.stdDev = tds[36].children[0].data;
+    // cross listed classes (CPE 101 / CSC 101) show the same review twice
+    var all = [];
+    var seen = {};
+    Object.keys(prof.reviews || {}).forEach(function (course) {
+        prof.reviews[course].forEach(function (r) {
+            if (seen[r.id]) return;
+            seen[r.id] = true;
+            // old reviews are ISO dates, new ones are "Sat Mar 22 2025 17:23:49 GMT+0000 (...)"
+            var date = new Date(r.postDate);
+            all.push({ course: course, grade: r.grade, text: r.rating, date: isNaN(date) ? r.postDate : date.toISOString() });
+            if (data.grades.hasOwnProperty(r.grade)) data.grades[r.grade]++;
+        });
+    });
+    all.sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+    // the short ones are mostly "BADD!!!111", skip those
+    data.reviews = all.filter(function (r) { return r.text.length > 80; }).slice(0, 6);
 
-            data.presentation.mean = tds[40].children[0].data;
-            data.presentation.mode = tds[44].children[0].data;
-            data.presentation.stdDev = tds[46].children[0].data;
+    var words = [];
+    all.forEach(function (r) {
+        words = words.concat(r.text.replace(/&#039;/g, "'").replace(/[^a-zA-Z']/g, ' ').split(' '));
+    });
+    var counts = cloud.countWords(words);
+    Object.keys(counts)
+        .sort(function (a, b) { return counts[b] - counts[a]; })
+        .slice(0, 80)
+        .forEach(function (w) { data.words[w] = counts[w]; });
+    return data;
+}
 
-            data.understandingness.mean = tds[50].children[0].data;
-            data.understandingness.mode = tds[54].children[0].data;
-            data.understandingness.stdDev = tds[56].children[0].data;
+function decorate(data, cb) {
+    if (fs.existsSync(path.join(PHOTOS, data.key + '.jpg'))) data.photo = data.key + '.jpg';
 
-            var deptSelect = $('font');
-            data.department = deptSelect[3].children[0].data;
-            data.teacher = deptSelect[2].children[0].data;
-            console.log(data.teacher);
+    var sizes = cloud.countsToSizes(data.words);
+    if (!data.found || !sizes.length) return cb(null, data);
+    if (cloud.exists(data.key)) {
+        data.cloud = data.key + 'Cloud.svg';
+        return cb(null, data);
+    }
+    cloud.generate(data.key, sizes, function (err, file) {
+        if (!err) data.cloud = file;
+        cb(null, data);
+    });
+}
 
-            var thing = $('u');
+// name like "DalbeyJohn" -> cb(err, data)
+module.exports = function (name, cb) {
+    teachers.ready.then(function () {
+        var prof = teachers.find(name);
+        if (!prof) return decorate(blank(name), cb);
 
-            var j = 3;
-            while ((thing[j].children[0].data).indexOf("Receiving") > -1 && data.grades.hasOwnProperty(thing[j].children[0].data.split("'")[1])) {
-                data.grades[thing[j].children[0].data.split("'")[1]] = tds[28 + 11 * j].children[0].data;
-                j++;
-            }
-
-            cb(null, data);
-        }
+        polyratings.professor(prof.id).then(function (full) {
+            decorate(fromProf(full), cb);
+        }).catch(function (err) {
+            console.log('no reviews for ' + name + ': ' + err.message);
+            var card = sampleCard(prof.id);
+            decorate(card || fromProf(prof), cb);
+        });
     });
 };
+
+module.exports.fromProf = fromProf;

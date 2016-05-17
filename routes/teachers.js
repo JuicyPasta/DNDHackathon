@@ -1,40 +1,32 @@
 var express = require('express');
 var router = express.Router();
-var request = require('request');
-var cheerio = require('cheerio');
-var teachersearch = require('../modules/index-teachers.js').getId;
+var teachers = require('../modules/index-teachers.js');
+var scrapeData = require('../modules/scrape-metadata.js');
 
-var fs = require('fs');
+function summary(key) {
+    var p = teachers.profs[key];
+    return {
+        key: key,
+        name: p.firstName + ' ' + p.lastName,
+        department: p.department,
+        rating: p.overallRating,
+        totalEvals: p.numEvals,
+    };
+}
 
-router.get('/LorraineDonegan.html', function(req, res, next) {
-   res.render('LorraineDonegan');
+router.post('/teacherQuery/:search', function (req, res) {
+    teachers.ready.then(function () {
+        res.json(teachers.search(req.params.search, 8).map(summary));
+    });
 });
 
-router.post('/teacherQuery/:search', function(req, res, next) {
-   console.log("received teacher query in teachers.js");
-   var teacherMap = teachersearch(req.params.searchString);
-    // console.log(teacherMap);
-   var matchTeachers = { };
-   var teachers = Object.keys(teacherMap);
-   var searchString = req.params.search;
-   // console.log("lenght of teachgers is " + teachers.length);
-   for (teacherNdx = 0; teacherNdx < teachers.length; teacherNdx++) {
-      // console.log("teacherNdx is " + teacherNdx);
-      var teacherName = teachers[teacherNdx];
-      // console.log("teacher name is " + teacherName);
-      // console.log("lower case name is " + teacherName.toLowerCase());
-      // console.log("lower case search string is " + searchString.toLowerCase());
-      // console.log("checking if teacher |" + teacherName.toLowerCase() + "| contains " + searchString.toLowerCase());
-      if (teacherName.toLowerCase().indexOf(searchString.toLowerCase()) > -1) {
-         // console.log(teacherName);
-         matchTeachers[teacherName] = teacherMap[teacherName];
-         
-      }
-   }
-   // console.log('in teahcerQuery map is ' + teacherMap);
-   console.log("FINAL MATTCH TEACHERS IS " + matchTeachers);
-   res.send(matchTeachers);
+router.get('/:teacher.html', function (req, res, next) {
+    scrapeData(req.params.teacher, function (err, data) {
+        if (err) return next(err);
+        if (!data.found) return next();
+        res.render('teacher', { t: data });
+    });
 });
 
-
+router.summary = summary;
 module.exports = router;
